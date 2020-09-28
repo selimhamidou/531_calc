@@ -1,0 +1,58 @@
+{% load static %}
+<html>
+    <head>
+        <style>
+        h1#title_homepage{
+    height: 200px;
+    width: 400px;
+    font-size: 80;
+    white-space: nowrap;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -300px;
+        }
+        h3 {
+    display: inline-block;
+    width:100px;
+            }
+
+    div.heading{
+    text-align: center;
+}
+
+    a.heading_element {
+    color : black;
+    text-decoration: none;
+
+}
+
+        
+        </style>
+    </head>
+    <body>
+        <section class='heading'>
+            {% block heading %}
+            <div class='heading'>
+                <h3><a class='heading_element' href="{% url 'login' %}">Login</a></h3>
+                <h3><a class='heading_element' href="{% url 'logout' %}">Logout</a></h3>
+                <h3><a class='heading_element' href="{% url 'signup' %}">Sign up</a></h3>
+                <h3><a class='heading_element' href="{% url 'options' %}">Options</a></h3>
+                <h3><a class='heading_element' href="{% url 'program' %}">Program</a></h3>
+                <h3><a class='heading_element' href="{% url 'history' %}">History</a></h3>
+                <h3><a class='heading_element' href="{% url 'chart_view' %}">Graphs/Max lifts</a></h3>
+                <br>
+            </div>
+            {% endblock heading %}
+        </section>
+        <section class='content'>
+            {% block content %}
+                <div>
+                    <h1 id='title_homepage'>531 calculator</h1>
+                </div>
+            {% endblock content %}
+        </section>
+
+    </body>
+</html>

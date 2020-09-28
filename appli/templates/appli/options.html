@@ -1,0 +1,18 @@
+{% extends 'appli/base.html' %}
+{% block content %}
+<h2>Enter your max </h2>
+<form method = "POST" action="{% url 'homeview'  %}"> {% csrf_token %}
+    Max Squat{{form.max_squat}}
+    <br><br>
+    Max Deadlift{{form.max_deadlift}}
+    <br><br>
+    Max Bench{{form.max_bench}}
+    <br><br>
+    Max overhead{{form.max_overhead}}
+    <br><br>
+    <input type = "submit" value = "Submit"> 
+
+</form>
+
+{% endblock %}
+

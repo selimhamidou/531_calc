@@ -1,0 +1,295 @@
+{% extends 'appli/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>531 calculator</title>
+
+    {% block content %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        $( document ).ready(function() {
+            // $('.all_weeks').children().hide();
+            $('.all_weeks').children().css('display', 'none');
+            $( "#week1" ).on('click', function() {
+                $('.all_weeks').find('section').css('display', 'none');  //Reclean the page if I click on 'week1' after having clicked on 'week2' for example
+                $('.all_weeks .week1_workout').css('display', 'block'); // * Including the section itself
+
+                $( "#day1" ).on('click', function() {
+                    $('#OverheadPress_week1').css('display', 'block'); // * Including the section itself
+
+                });
+
+                $( "#day2" ).on('click', function() {
+                    $('#Deadlift_week1').css('display', 'block'); // * Including the section itself
+
+                });
+
+                $( "#day3" ).on('click', function() {
+                    $('#BenchPress_week1').css('display', 'block'); // * Including the section itself
+
+                });
+
+                $( "#day4" ).on('click', function() {
+                    $('#Squat_week1').css('display', 'block'); // * Including the section itself
+
+                });
+            });
+                
+            $( "#week2" ).on('click', function() {
+                $('.all_weeks').find('section').css('display', 'none');  //Reclean the page if I click on 'week1' after having clicked on 'week2' for example
+                $('.all_weeks .week2_workout').css('display', 'block'); // * Including the section itself
+
+                $( "#day1" ).on('click', function() {
+                    $('#OverheadPress_week2').css('display', 'block'); // * Including the section itself
+
+                });
+
+                $( "#day2" ).on('click', function() {
+                    $('#Deadlift_week2').css('display', 'block'); // * Including the section itself
+
+                });
+
+                $( "#day3" ).on('click', function() {
+                    $('#BenchPress_week2').css('display', 'block'); // * Including the section itself
+
+                });
+
+                $( "#day4" ).on('click', function() {
+                    $('#Squat_week2').css('display', 'block'); // * Including the section itself
+
+                });
+                   
+                });
+
+            $( "#week3" ).on('click', function() {
+                $('.all_weeks').find('section').css('display', 'none');  //Reclean the page if I click on 'week1' after having clicked on 'week2' for example
+                $('.all_weeks .week3_workout').css('display', 'block'); // * Including the section itself
+
+                $( "#day1" ).on('click', function() {
+                    $('#OverheadPress_week3').css('display', 'block'); // * Including the section itself
+
+                });
+
+                $( "#day2" ).on('click', function() {
+                    $('#Deadlift_week3').css('display', 'block'); // * Including the section itself
+
+                });
+
+                $( "#day3" ).on('click', function() {
+                    $('#BenchPress_week3').css('display', 'block'); // * Including the section itself
+
+                });
+
+                $( "#day4" ).on('click', function() {
+                    $('#Squat_week3').css('display', 'block'); // * Including the section itself
+
+                });
+            
+            });
+
+            $( "#week4" ).on('click', function() {
+                $('.all_weeks').find('section').css('display', 'none');  //Reclean the page if I click on 'week1' after having clicked on 'week2' for example
+                $('.all_weeks .week4_workout').css('display', 'block'); // * Including the section itself
+
+                $( "#day1" ).on('click', function() {
+                    $('#OverheadPress_week4').css('display', 'block'); // * Including the section itself
+
+                });
+                $( "#day2" ).on('click', function() {
+                    $('#Deadlift_week4').css('display', 'block'); // * Including the section itself
+
+                });
+
+                $( "#day3" ).on('click', function() {
+                    $('#BenchPress_week4').css('display', 'block'); // * Including the section itself
+
+                });
+
+                $( "#day4" ).on('click', function() {
+                    $('#Squat_week4').css('display', 'block'); // * Including the section itself
+
+                });
+                    
+                });
+        });
+                
+    </script>
+
+<style>
+
+
+    ul.weeks li{
+        display:inline;
+    }
+    ul.days li{
+        display:inline;
+    }
+
+    div.content_week1_container{
+        position: absolute;
+        top: 70px; left: 40px;
+    }
+
+    div.content_week2_container{
+        position: absolute;
+        top: 70px; left: 40px;
+    }
+
+    div.content_week3_container{
+        position: absolute;
+        top: 70px; left: 40px;
+    }
+
+    div.content_week4_container{
+        position: absolute;
+        top: 70px; left: 40px;
+    }
+</style>
+
+</head>
+    <body>
+        <section class='weeks_days'>
+            <ul class = "weeks">
+                <li id='week1'>Week 1</li>
+                <li id='week2'>Week 2</li>
+                <li id='week3'>Week 3</li>
+                <li id='week4'>Week 4</li>
+            </ul>
+            <ul class = "days">
+                <li id='day1'>Day 1</li>
+                <li id='day2'>Day 2</li>
+                <li id='day3'>Day 3</li>
+                <li id='day4'>Day 4</li>
+            </ul>
+        </section>
+
+        <section class='all_weeks'>
+            <section class='week1_workout'>
+                {% for big_four_exercise in program_week1 %}
+                    <section id={{big_four_exercise.0|add:'_week1'}}>
+                        <form method="POST">
+                            {% csrf_token %}
+                            {% for seance in big_four_exercise %}
+                                {% if forloop.first %}
+                                    <input type='hidden' name='name_exo' value={{seance}}>
+                                    <h1>{{seance}}</h1>
+                                {% else %}
+                                    {% if forloop.last %} 
+                                        <div>
+                                            <input type="checkbox" id="last_serie" name="last_serie" value={{seance.1}}>
+                                            <label for="last_serie">Do the max of reps for {{seance.1}} kg </label>
+                                            <select name='nombre_reps' id="nombre_reps" value={{reps_possibilities}}>
+                                            {% for reps_possibilities in third_set_possibilities %}
+                                                <option>{{reps_possibilities}}</option>
+                                            {% endfor %}
+                                            </select>
+                                        </div>
+                                    {% else %}
+                                        <div>
+                                            <input type="checkbox" id="serie" name="serie">
+                                            <label for="set">{{ seance.0 }}x{{seance.1}} kg </label>
+                                        </div>
+                                    {% endif %}
+                                {% endif %} 
+                            {% endfor %}
+                            <input type="submit" value="Submit">
+                        </form>
+                    </section>
+                {% endfor %}
+            </section>
+
+            <section class='week2_workout'>
+                {% for big_four_exercise in program_week2 %}
+                    <section id={{big_four_exercise.0|add:'_week2'}}>
+                        <form method="POST">
+                            {% csrf_token %}
+                            {% for seance in big_four_exercise %}
+                                {% if forloop.first %}
+                                    <input type='hidden' name='name_exo' value={{seance}}>
+                                    <h1>{{seance}}</h1>
+                                {% else %}
+                                    {% if forloop.last %} 
+                                        <div>
+                                            <input type="checkbox" id="last_serie" name="last_serie" value={{seance.1}}>
+                                            <label for="last_serie">Do the max of reps for {{seance.1}} kg </label>
+                                            <select name='nombre_reps' id="nombre_reps" value={{reps_possibilities}}>
+                                            {% for reps_possibilities in third_set_possibilities %}
+                                                <option>{{reps_possibilities}}</option>
+                                            {% endfor %}
+                                            </select>
+                                        </div>
+                                    {% else %}
+                                        <div>
+                                            <input type="checkbox" id="serie" name="serie">
+                                            <label for="set">{{ seance.0 }}x{{seance.1}} kg </label>
+                                        </div>
+                                    {% endif %}
+                                {% endif %} 
+                            {% endfor %}
+                            <input type="submit" value="Submit">
+                        </form>
+                    </section>
+                {% endfor %}
+            </section>
+
+            <section class='week3_workout'>
+                {% for big_four_exercise in program_week3 %}
+                    <section id={{big_four_exercise.0|add:'_week3'}}>
+                        <form method="POST">
+                            {% csrf_token %}
+                            {% for seance in big_four_exercise %}
+                                {% if forloop.first %}
+                                    <input type='hidden' name='name_exo' value={{seance}}>
+                                    <h1>{{seance}}</h1>
+                                {% else %}
+                                    {% if forloop.last %} 
+                                        <div>
+                                            <input type="checkbox" id="last_serie" name="last_serie" value={{seance.1}}>
+                                            <label for="last_serie">Do the max of reps for {{seance.1}} kg </label>
+                                            <select name='nombre_reps' id="nombre_reps" value={{reps_possibilities}}>
+                                            {% for reps_possibilities in third_set_possibilities %}
+                                                <option>{{reps_possibilities}}</option>
+                                            {% endfor %}
+                                            </select>
+                                        </div>
+                                    {% else %}
+                                        <div>
+                                            <input type="checkbox" id="serie" name="serie">
+                                            <label for="set">{{ seance.0 }}x{{seance.1}} kg </label>
+                                        </div>
+                                    {% endif %}
+                                {% endif %} 
+                            {% endfor %}
+                            <input type="submit" value="Submit">
+                        </form>
+                    </section>
+                {% endfor %}
+            </section>
+            
+            <section class='week4_workout'>
+                {% for big_four_exercise in program_week4 %}
+                    <section id={{big_four_exercise.0|add:'_week4'}}>
+                        <form method="POST">
+                            {% csrf_token %}
+                            {% for seance in big_four_exercise %}
+                                {% if forloop.first %}
+                                    <input type='hidden' name='name_exo' value={{seance}}>
+                                    <h1>{{seance}}</h1>
+                                {% else %}
+                                    <div>
+                                        <input type="checkbox" id="serie" name="serie">
+                                        <label for="set">{{ seance.0 }}x{{seance.1}} kg </label>
+                                    </div>
+                                {% endif %} 
+                            {% endfor %}
+                            <input type="submit" value="Submit">
+                        </form>
+                    </section>
+                {% endfor %}
+            </section>
+        </section>
+    </body>
+    {% endblock %}
