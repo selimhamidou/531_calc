@@ -4,9 +4,7 @@ import dj_database_url
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.environ.get('DEBUG', False)
-DATABASES = {
-    DATABASES = {'default': dj_database_url.config()}
-}
+
 
 # Application definition
 
