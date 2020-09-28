@@ -2,7 +2,7 @@ import os
 from django.core.wsgi import get_wsgi_application
 import dj_database_url
 
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 DATABASES = {
     'default': dj_database_url.config(
