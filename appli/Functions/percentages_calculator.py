@@ -1,11 +1,17 @@
 from appli.models import User
 from appli import container
 from appli.container import week1, week2, week3, week4
- 
-max_squat=User.objects.values_list('max_squat', flat=True).latest('id')
-max_deadlift=User.objects.values_list('max_deadlift', flat=True).latest('id')
-max_overhead=User.objects.values_list('max_overhead_press', flat=True).latest('id')
-max_bench=User.objects.values_list('max_bench_press', flat=True).latest('id')
+
+if User is not None:
+    max_squat=User.objects.values_list('max_squat', flat=True).latest('id')
+    max_deadlift=User.objects.values_list('max_deadlift', flat=True).latest('id')
+    max_overhead=User.objects.values_list('max_overhead_press', flat=True).latest('id')
+    max_bench=User.objects.values_list('max_bench_press', flat=True).latest('id')
+else:
+    max_squat=20
+    max_deadlift=20
+    max_overhead=20
+    max_bench=20
 
 def percentages_calculator(week):
     squat_week1=['Squat']
