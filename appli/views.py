@@ -16,7 +16,6 @@ from appli.models import Daily_record, User
 import datetime
 
 
-
 def home_view(request):
     return render(request, 'appli/homeview.html', {})
 
@@ -100,10 +99,11 @@ def program(request):
             reps_number=int(reps_number)
             max_of_the_day=(weight/(1.0278-0.0278*reps_number))
             #print(User.objects.all())
-            if User is not None:
-                current_user=User.objects.filter(username=request.user).latest('id')
+            test_len_user=len(User.objects.all())
+            if test_len_user==0:
+                current_user='test'
             else:
-                current_user='testuser'
+                current_user=User.objects.filter(username=request.user).latest('id')
             data_to_save=Daily_record(id=None, user=current_user, date=datetime.date.today(), exercise=name_exo, reps_number=reps_number, weight=weight, max_of_the_day=max_of_the_day)
             data_to_save.save()
             #print(Daily_record.objects.all())
@@ -118,10 +118,12 @@ def program(request):
         })
 
 def history(request):
-    if Daily_record is not None:
+    test_len_daily_record=len(Daily_record.objects.all())
+    if test_len_daily_record==0:
+        queryset='test'
+    else:    
         queryset=Daily_record.objects.filter(user__username=request.user).values_list('user__username', 'date', 'exercise', 'reps_number', 'weight', 'max_of_the_day')
-    else:
-        queryset=['testuser']
+
     legend_array=['Username', 'Date', 'Exercise', 'Number of reps', 'Weight lifted', '1RM']
     return render(request, 'appli/history.html', {'all_perfs': queryset, 'legend_table':legend_array})
 
@@ -132,10 +134,13 @@ def chart_view(request):
 
 def line_chart(request):
     dates_array=[]
-    if Daily_record is not None:
-        find_date_queryset=Daily_record.objects.filter(user__username=request.user).values_list('date', flat=True)
-    else:
+    test_len_daily_record=len(Daily_record.objects.all())
+
+    if test_len_daily_record==0:
         find_date_queryset=datetime.now()
+    else:
+        find_date_queryset=Daily_record.objects.filter(user__username=request.user).values_list('date', flat=True)
+        
     #dates_array
     for date in find_date_queryset:
         dates_array.append(date)
@@ -144,17 +149,10 @@ def line_chart(request):
     providers=['Squat', 'Deadlift', 'Overhead Press', 'Bench Press']
     
     #data_for_chart_array
-    if Daily_record is not None:
-        find_squat_queryset=Daily_record.objects.filter(user__username=request.user).filter(exercise='Squat').values_list('max_of_the_day', flat=True)
-        find_deadlift_queryset=Daily_record.objects.filter(user__username=request.user).filter(exercise='Deadlift').values_list('max_of_the_day', flat=True)
-        find_overhead_queryset=Daily_record.objects.filter(user__username=request.user).filter(exercise='Overhead Press').values_list('max_of_the_day', flat=True)
-        find_bench_queryset=Daily_record.objects.filter(user__username=request.user).filter(exercise='Bench Press').values_list('max_of_the_day', flat=True)
-    else:
-        find_squat_queryset=[20]
-        find_bench_queryset=[20]
-        find_overhead_queryset=[20]
-        find_bench_queryset=[20]
-
+    find_squat_queryset=Daily_record.objects.filter(user__username=request.user).filter(exercise='Squat').values_list('max_of_the_day', flat=True)
+    find_deadlift_queryset=Daily_record.objects.filter(user__username=request.user).filter(exercise='Deadlift').values_list('max_of_the_day', flat=True)
+    find_overhead_queryset=Daily_record.objects.filter(user__username=request.user).filter(exercise='Overhead Press').values_list('max_of_the_day', flat=True)
+    find_bench_queryset=Daily_record.objects.filter(user__username=request.user).filter(exercise='Bench Press').values_list('max_of_the_day', flat=True)
 
     squat_array=[]
     deadlift_array=[]
