@@ -1,1 +1,1 @@
-web: gunicorn 531_calculator.wsgi --log-file - --log-level debug
+web: gunicorn 531_calculator.wsgi --log-file
