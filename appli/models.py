@@ -9,7 +9,7 @@ class User(models.Model):
     max_bench_press=models.FloatField(default=20)
 
     def __str__(self):
-        return '%s'%(self.username)
+        return '%s %s %s %s'%(self.username, self.max_deadlift, self.max_overhead_press, self.max_bench_press)
 
 class Program(models.Model):
     user=models.ForeignKey(User, on_delete=models.CASCADE)

@@ -2,16 +2,18 @@ from appli.models import User
 from appli import container
 from appli.container import week1, week2, week3, week4
 
-test_len_user=len(User.objects.all())
-if test_len_user==0:
-    User.objects.create(username='test')
-else:
-    max_squat=User.objects.values_list('max_squat', flat=True).latest('id')
-    max_deadlift=User.objects.values_list('max_deadlift', flat=True).latest('id')
-    max_overhead=User.objects.values_list('max_overhead_press', flat=True).latest('id')
-    max_bench=User.objects.values_list('max_bench_press', flat=True).latest('id')
 
-def percentages_calculator(week):
+def percentages_calculator(user,week):
+    test_len_user=len(User.objects.all())
+    if test_len_user==0:
+        User.objects.create(username='test')
+    else:
+        max_squat=User.objects.values_list('max_squat', flat=True).filter(username=user).latest('id')
+        max_deadlift=User.objects.values_list('max_deadlift', flat=True).filter(username=user).latest('id')
+        max_overhead=User.objects.values_list('max_overhead_press', flat=True).filter(username=user).latest('id')
+        max_bench=User.objects.values_list('max_bench_press', flat=True).filter(username=user).latest('id')
+    print(User.objects.all())
+
     squat_week1=['Squat']
     deadlift_week1=['Deadlift']
     overhead_week1=['OverheadPress']

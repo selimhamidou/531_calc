@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from appli import models
 from django.db.models import Q
 from appli.Functions.percentages_calculator import percentages_calculator
 from appli import container
@@ -12,11 +11,12 @@ import datetime
 from django.views.generic import TemplateView
 from chartjs.views.lines import BaseLineChartView
 from django.http import JsonResponse
-from appli.models import Daily_record, User
+from appli.models import Daily_record, User, Program
 import datetime
 
 
 def home_view(request):
+
     return render(request, 'appli/homeview.html', {})
 
 def login_view(request):
@@ -52,6 +52,7 @@ def signup_view(request):
 
 def options(request):
     if request.method == 'POST':
+        print('hey')
         form = Formulaire(request.POST)
         if form.is_valid():
             #getting form results
@@ -62,16 +63,21 @@ def options(request):
             user_save=User(username=request.user, max_squat=max_squat, max_deadlift=max_deadlift, max_overhead_press=max_overhead, max_bench_press=max_bench)
             user_save.save()
             program_save=Program(user=user_save)
-            program_save.save()                        
+            program_save.save() 
             context={
-                'max_squat':max_squat,  'max_deadlift':max_deadlift, 'max_bench':max_bench,  'max_overhead':max_overhead, 'programme':programme} 
-            return redirect(options)
+                'max_squat':max_squat,  'max_deadlift':max_deadlift, 'max_bench':max_bench,  'max_overhead':max_overhead} 
+            return redirect('homeview')
             
     # if a GET (or any other method) we'll create a blank form
     else:
         form = Formulaire()
 
     return render(request, 'appli/options.html', {'form':form})
+    if request.method=='GET':
+        print('non')
+    else:
+        print('ok')
+    return render(request, 'appli/options.html', {})
 
 
 def program(request): 
@@ -110,10 +116,10 @@ def program(request):
         return redirect(home_view)
         
     return render(request, 'appli/programme_force.html', {
-        'program_week1':percentages_calculator(week='week1'), 
-        'program_week2':percentages_calculator(week='week2'),
-        'program_week3':percentages_calculator(week='week3'),
-        'program_week4':percentages_calculator(week='week4'),
+        'program_week1':percentages_calculator(user=request.user, week='week1'), 
+        'program_week2':percentages_calculator(user=request.user, week='week2'),
+        'program_week3':percentages_calculator(user=request.user, week='week3'),
+        'program_week4':percentages_calculator(user=request.user, week='week4'),
         'third_set_possibilities':third_set_possibilities,
         })
 
