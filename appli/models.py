@@ -1,5 +1,6 @@
 from django.db import models
 import datetime
+from django.utils import timezone
 #Définition des max pour pouvoir les stocker et les réutiliser
 class User(models.Model):
     username=models.CharField(max_length=100)
@@ -20,12 +21,24 @@ class Program(models.Model):
 
 class Daily_record(models.Model):
     user=models.ForeignKey(User, on_delete=models.CASCADE)
-    date=models.DateField(default=datetime.datetime.now())
+    date=models.DateField(default=timezone.now())
     week_number=models.IntegerField(default=1)
     exercise=models.CharField(max_length=200)
     reps_number=models.IntegerField(default=1)
     weight=models.FloatField(default=20)
     max_of_the_day=models.FloatField(default=20)
+    #Assistance work records
+    first_exercise_assistance_work_name=models.CharField(max_length=200, default='test_exercise')
+    first_exercise_assistant_work_weight=models.FloatField(default=0)
+    second_exercise_assistance_work_name=models.CharField(max_length=200, default='test_exercise')
+    second_exercise_assistant_work_weight=models.FloatField(default=0)
+    third_exercise_assistance_work_name=models.CharField(max_length=200, default='test_exercise')
+    third_exercise_assistant_work_weight=models.FloatField(default=0)
+    fourth_exercise_assistance_work_name=models.CharField(max_length=200, default='test_exercise')
+    fourth_exercise_assistant_work_weight=models.FloatField(default=0)
+    fifth_exercise_assistance_work_name=models.CharField(max_length=200, default='test_exercise')
+    fifth_exercise_assistant_work_weight=models.FloatField(default=0)
+
 
     def __str__(self):
         return '%s %s %s %s %s'%(self.user, self.date, self.reps_number, self.weight, self.max_of_the_day)

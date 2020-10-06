@@ -20,30 +20,37 @@
           new Chart(ctx, {
             type: 'line',
             data: {
-              labels: data.labels[0],
+              labels: data.labels,
+
               datasets: [{
-                label: data.providers,
+                label: data.providers[0],
                 data: data.data[0],
                 fill:false,
                 borderColor:'red',
 
-                label: data.providers,
+              },
+              {
+              label: data.providers[1],
                 data: data.data[1],
                 fill:false,
                 borderColor:'blue',
-
-                label: data.providers,
+              },
+              {
+              label: data.providers[2],
                 data: data.data[2],
                 fill:false,
                 borderColor:'green',
 
-                label: data.providers,
+              },
+              {
+              label: data.providers[3],
                 data: data.data[3],
                 fill:false,
                 borderColor:'black',
-
-
-              }]
+              }
+              
+              ]
+              
             },
             
             options: {

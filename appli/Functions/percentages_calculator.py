@@ -12,7 +12,6 @@ def percentages_calculator(user,week):
         max_deadlift=User.objects.values_list('max_deadlift', flat=True).filter(username=user).latest('id')
         max_overhead=User.objects.values_list('max_overhead_press', flat=True).filter(username=user).latest('id')
         max_bench=User.objects.values_list('max_bench_press', flat=True).filter(username=user).latest('id')
-    print(User.objects.all())
 
     squat_week1=['Squat']
     deadlift_week1=['Deadlift']

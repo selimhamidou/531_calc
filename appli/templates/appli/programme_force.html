@@ -19,21 +19,29 @@
 
                 $( "#day1" ).on('click', function() {
                     $('#OverheadPress_week1').css('display', 'block'); // * Including the section itself
+                    $('.OverheadPress_assistance_work_week1').css('display', 'block');
+
 
                 });
 
                 $( "#day2" ).on('click', function() {
                     $('#Deadlift_week1').css('display', 'block'); // * Including the section itself
+                    $('.Deadlift_assistance_work_week1').css('display', 'block');
+
 
                 });
 
                 $( "#day3" ).on('click', function() {
                     $('#BenchPress_week1').css('display', 'block'); // * Including the section itself
+                    $('.BenchPress_assistance_work_week1').css('display', 'block');
+
 
                 });
 
                 $( "#day4" ).on('click', function() {
                     $('#Squat_week1').css('display', 'block'); // * Including the section itself
+                    $('.Squat_assistance_work_week1').css('display', 'block');
+
 
                 });
             });
@@ -44,22 +52,23 @@
 
                 $( "#day1" ).on('click', function() {
                     $('#OverheadPress_week2').css('display', 'block'); // * Including the section itself
+                    $('.OverheadPress_assistance_work_week2').css('display', 'block');
 
                 });
 
                 $( "#day2" ).on('click', function() {
                     $('#Deadlift_week2').css('display', 'block'); // * Including the section itself
-
+                    $('.Deadlift_assistance_work_week2').css('display', 'block');
                 });
 
                 $( "#day3" ).on('click', function() {
                     $('#BenchPress_week2').css('display', 'block'); // * Including the section itself
-
+                    $('.BenchPress_assistance_work_week2').css('display', 'block');
                 });
 
                 $( "#day4" ).on('click', function() {
                     $('#Squat_week2').css('display', 'block'); // * Including the section itself
-
+                    $('.Squat_assistance_work_week2').css('display', 'block');
                 });
                    
                 });
@@ -70,21 +79,28 @@
 
                 $( "#day1" ).on('click', function() {
                     $('#OverheadPress_week3').css('display', 'block'); // * Including the section itself
+                    $('.OverheadPress_assistance_work_week3').css('display', 'block');
 
                 });
 
                 $( "#day2" ).on('click', function() {
                     $('#Deadlift_week3').css('display', 'block'); // * Including the section itself
+                    $('.Deadlift_assistance_work_week3').css('display', 'block');
+
 
                 });
 
                 $( "#day3" ).on('click', function() {
                     $('#BenchPress_week3').css('display', 'block'); // * Including the section itself
+                    $('.BenchPress_assistance_work_week3').css('display', 'block');
+
 
                 });
 
                 $( "#day4" ).on('click', function() {
                     $('#Squat_week3').css('display', 'block'); // * Including the section itself
+                    $('.Squat_assistance_work_week3').css('display', 'block');
+
 
                 });
             
@@ -96,20 +112,28 @@
 
                 $( "#day1" ).on('click', function() {
                     $('#OverheadPress_week4').css('display', 'block'); // * Including the section itself
+                    $('.OverheadPress_assistance_work_week4').css('display', 'block');
+
 
                 });
                 $( "#day2" ).on('click', function() {
                     $('#Deadlift_week4').css('display', 'block'); // * Including the section itself
+                    $('.Deadlift_assistance_work_week4').css('display', 'block');
+
 
                 });
 
                 $( "#day3" ).on('click', function() {
                     $('#BenchPress_week4').css('display', 'block'); // * Including the section itself
+                    $('.BenchPress_assistance_work_week4').css('display', 'block');
+
 
                 });
 
                 $( "#day4" ).on('click', function() {
                     $('#Squat_week4').css('display', 'block'); // * Including the section itself
+                    $('.Squat_assistance_work_week4').css('display', 'block');
+
 
                 });
                     
@@ -119,6 +143,16 @@
     </script>
 
 <style>
+    h1{
+        font-size:25px;
+        padding-bottom:0px;
+        margin-bottom:0px;
+    }
+
+    h2{
+        font-size:20px;
+ 
+    }
 
 
     ul.weeks li{
@@ -146,6 +180,10 @@
     div.content_week4_container{
         position: absolute;
         top: 70px; left: 40px;
+    }
+
+    div.assistance_work_bar {
+        display:block;
     }
 </style>
 
@@ -195,6 +233,32 @@
                                     {% endif %}
                                 {% endif %} 
                             {% endfor %}
+                            <h2>Make three sets of 10-15 reps for each assistance exercise, and record it !</h2>
+                            {% for assistance_exercises_groups in assistance_work_array %}
+                                <section class={{assistance_exercises_groups.0|add:'_assistance_work_week1'}}>
+                                    {% for assistance_exercises in assistance_exercises_groups %}
+                                        {% if forloop.first %}
+                                            <br>
+                                        {% else %}
+                                            <h1>{{ assistance_exercises }}</h1>
+                                            <br>
+                                            {% for i in '123'|make_list %}
+                                                <div class='assistance_work_bar'>
+                                                    <input type="checkbox" id={{assistance_exercises|cut:" "}}_serie{{forloop.counter}}_checkbox>
+                                                    <select id={{assistance_exercises|cut:" "}}_serie{{forloop.counter}}_select>
+                                                        {% for option_value in array_to_use_in_for_loop_select_template %}
+                                                            <option value={{option_value}}>{{option_value}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <input type="text" id={{assistance_exercises|cut:" "}}_serie{{forloop.counter}}_textbox size=1>
+                                                    <p></p>
+                                                </div>
+                                            {% endfor %}
+                                            <br>
+                                        {% endif %}
+                                    {% endfor %}
+                                </section>
+                            {% endfor %}
                             <input type="submit" value="Submit">
                         </form>
                     </section>
@@ -228,6 +292,32 @@
                                         </div>
                                     {% endif %}
                                 {% endif %} 
+                            
+                            {% endfor %}
+                            <h2>Make three sets of 10-15 reps for each assistance exercise, and record it !</h2>
+                            {% for assistance_exercises_groups in assistance_work_array %}
+                                <section class={{assistance_exercises_groups.0|add:'_assistance_work_week2'}}>
+                                    {% for assistance_exercises in assistance_exercises_groups %}
+                                        {% if forloop.first %}
+                                            <br>
+                                        {% else %}
+                                            <h1>{{ assistance_exercises }}</h1>
+                                            <br>
+                                            {% for i in '123'|make_list %}
+                                                <div class='assistance_work_bar'>
+                                                    <input type="checkbox" id={{assistance_exercises|cut:" "}}_serie{{forloop.counter}}_checkbox>
+                                                    <select id={{assistance_exercises|cut:" "}}_serie{{forloop.counter}}_select>
+                                                        {% for option_value in array_to_use_in_for_loop_select_template %}
+                                                            <option value={{option_value}}>{{option_value}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <input type="text" id={{assistance_exercises|cut:" "}}_serie{{forloop.counter}}_textbox size=1>
+                                                </div>
+                                            {% endfor %}
+                                            <br>
+                                        {% endif %}
+                                    {% endfor %}
+                                </section>
                             {% endfor %}
                             <input type="submit" value="Submit">
                         </form>
@@ -263,6 +353,31 @@
                                     {% endif %}
                                 {% endif %} 
                             {% endfor %}
+                            <h2>Make three sets of 10-15 reps for each assistance exercise, and record it !</h2>
+                            {% for assistance_exercises_groups in assistance_work_array %}
+                                <section class={{assistance_exercises_groups.0|add:'_assistance_work_week3'}}>
+                                    {% for assistance_exercises in assistance_exercises_groups %}
+                                        {% if forloop.first %}
+                                            <br>
+                                        {% else %}
+                                            <h1>{{ assistance_exercises }}</h1>
+                                            <br>
+                                            {% for i in '123'|make_list %}
+                                                <div class='assistance_work_bar'>
+                                                    <input type="checkbox" id={{assistance_exercises|cut:" "}}_serie{{forloop.counter}}_checkbox>
+                                                    <select id={{assistance_exercises|cut:" "}}_serie{{forloop.counter}}_select>
+                                                        {% for option_value in array_to_use_in_for_loop_select_template %}
+                                                            <option value={{option_value}}>{{option_value}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <input type="text" id={{assistance_exercises|cut:" "}}_serie{{forloop.counter}}_textbox size=1>
+                                                </div>
+                                            {% endfor %}
+                                            <br>
+                                        {% endif %}
+                                    {% endfor %}
+                                </section>
+                            {% endfor %}
                             <input type="submit" value="Submit">
                         </form>
                     </section>
@@ -284,6 +399,31 @@
                                         <label for="set">{{ seance.0 }}x{{seance.1}} kg </label>
                                     </div>
                                 {% endif %} 
+                            {% endfor %}
+                            <h2>Make three sets of 10-15 reps for each assistance exercise, and record it !</h2>
+                            {% for assistance_exercises_groups in assistance_work_array %}
+                                <section class={{assistance_exercises_groups.0|add:'_assistance_work_week4'}}>
+                                    {% for assistance_exercises in assistance_exercises_groups %}
+                                        {% if forloop.first %}
+                                            <br>
+                                        {% else %}
+                                            <h1>{{ assistance_exercises }}</h1>
+                                            <br>
+                                            {% for i in '123'|make_list %}
+                                                <div class='assistance_work_bar'>
+                                                    <input type="checkbox" id={{assistance_exercises|cut:" "}}_serie{{forloop.counter}}_checkbox>
+                                                    <select id={{assistance_exercises|cut:" "}}_serie{{forloop.counter}}_select>
+                                                        {% for option_value in array_to_use_in_for_loop_select_template %}
+                                                            <option value={{option_value}}>{{option_value}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <input type="text" id={{assistance_exercises|cut:" "}}_serie{{forloop.counter}}_textbox size=1>
+                                                </div>
+                                            {% endfor %}
+                                            <br>
+                                        {% endif %}
+                                    {% endfor %}
+                                </section>
                             {% endfor %}
                             <input type="submit" value="Submit">
                         </form>

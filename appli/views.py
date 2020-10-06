@@ -52,7 +52,6 @@ def signup_view(request):
 
 def options(request):
     if request.method == 'POST':
-        print('hey')
         form = Formulaire(request.POST)
         if form.is_valid():
             #getting form results
@@ -73,11 +72,7 @@ def options(request):
         form = Formulaire()
 
     return render(request, 'appli/options.html', {'form':form})
-    if request.method=='GET':
-        print('non')
-    else:
-        print('ok')
-    return render(request, 'appli/options.html', {})
+
 
 
 def program(request): 
@@ -114,13 +109,26 @@ def program(request):
             data_to_save.save()
             #print(Daily_record.objects.all())
         return redirect(home_view)
-        
+    assistance_work_array_for_OverheadPress=['OverheadPress','Close grip Bench Press', 'Pull ups', 'Dips', 'Triceps Pushdown', 'Biceps Curls']
+    assistance_work_array_for_Deadlift=['Deadlift','Front Squats', 'hamstrings Curls', 'Good Mornings', 'Hanging Leg Raises']
+    assistance_work_array_for_BenchPress=['BenchPress','Incline Press', 'Pull Ups', 'Dips', 'Chin ups', 'Triceps Pushdown']
+    assistance_work_array_for_Squat=['Squat','Stiff Leg Deadlift', 'hamstrings Curls', 'Good Mornings', 'Ab wheel']
+    assistance_work_array=[assistance_work_array_for_OverheadPress, assistance_work_array_for_Deadlift, assistance_work_array_for_BenchPress, assistance_work_array_for_Squat]
+
+    array_to_use_in_for_loop_select_template=range(0,20)
+
     return render(request, 'appli/programme_force.html', {
         'program_week1':percentages_calculator(user=request.user, week='week1'), 
         'program_week2':percentages_calculator(user=request.user, week='week2'),
         'program_week3':percentages_calculator(user=request.user, week='week3'),
         'program_week4':percentages_calculator(user=request.user, week='week4'),
+        'assistance_work_array_for_OverheadPress':assistance_work_array_for_OverheadPress,
+        'assistance_work_array_for_Deadlift':assistance_work_array_for_Deadlift,
+        'assistance_work_array_for_BenchPress':assistance_work_array_for_BenchPress,
+        'assistance_work_array_for_Squat':assistance_work_array_for_Squat,
+        'assistance_work_array':assistance_work_array,
         'third_set_possibilities':third_set_possibilities,
+        'array_to_use_in_for_loop_select_template':array_to_use_in_for_loop_select_template,
         })
 
 def history(request):
@@ -157,9 +165,8 @@ def line_chart(request):
     #data_for_chart_array
     find_squat_queryset=Daily_record.objects.filter(user__username=request.user).filter(exercise='Squat').values_list('max_of_the_day', flat=True)
     find_deadlift_queryset=Daily_record.objects.filter(user__username=request.user).filter(exercise='Deadlift').values_list('max_of_the_day', flat=True)
-    find_overhead_queryset=Daily_record.objects.filter(user__username=request.user).filter(exercise='Overhead Press').values_list('max_of_the_day', flat=True)
-    find_bench_queryset=Daily_record.objects.filter(user__username=request.user).filter(exercise='Bench Press').values_list('max_of_the_day', flat=True)
-
+    find_overhead_queryset=Daily_record.objects.filter(user__username=request.user).filter(exercise='OverheadPress').values_list('max_of_the_day', flat=True)
+    find_bench_queryset=Daily_record.objects.filter(user__username=request.user).filter(exercise='BenchPress').values_list('max_of_the_day', flat=True)
     squat_array=[]
     deadlift_array=[]
     overhead_array=[]
@@ -177,7 +184,6 @@ def line_chart(request):
         bench_array.append(max_of_the_day_bench)
     
     data_for_chart_array=[squat_array, deadlift_array, overhead_array, bench_array]
-    print(data_for_chart_array)
 
     return JsonResponse(data={
         'labels':dates_array,
